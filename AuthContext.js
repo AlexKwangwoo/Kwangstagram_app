@@ -8,10 +8,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ isLoggedIn: isLoggedInProp, children }) => {
   // isLoggedIn이 중복이름이라 바꿔줌!
   const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp);
-  const logUserIn = async () => {
+  const logUserIn = async (token) => {
+    // console.log(token);
     try {
       await AsyncStorage.setItem("isLoggedIn", "true");
       //isLoggedIn 이거는 asyncStorage에 스트링만 저장됨!!
+      await AsyncStorage.setItem("jwt", token); //jwt라는 곳의 이름을 가진곳에 토큰이 저장됨
       setIsLoggedIn(true);
     } catch (e) {
       console.log(e);

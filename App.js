@@ -21,6 +21,7 @@ export default function App() {
   const [client, setClient] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const preLoad = async () => {
+    // await AsyncStorage.clear(); //로그인 저장한거 삭제.. 처음부터 테스트 할때사용!
     try {
       await Font.loadAsync({
         ...Ionicons.font,
