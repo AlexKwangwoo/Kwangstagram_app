@@ -37,6 +37,14 @@ export default function App() {
       //처음에는 storage있는지 확인 있으면 데이터를 가져오고 없으면 만든다!
       const client = new ApolloClient({
         cache, //위에서 만든 캐시를 가져온다!
+        request: async (operation) => {
+          const token = await AsyncStorage.getItem("jwt");
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` },
+          }); // 쿼리를통해 백앤드를 접근할때 토큰을 인증 받아야한다!
+        }, // 로그인됐을때만 사용할수있는 쿼리가 있기 때문에 처음 로그인할때 발생함!
+        // 그래서 새로고침하면 정사적으로 진행되는데.. 이를 고쳤음! 바로 먹히게끔!
+        // 두번째 들어갈때는 persistCache를 이용해 토큰이 바로 적용됨을 알수있다!
         ...apolloClientOptions,
       }); //캐쉬를 가진 client를 만들거임!
       //client가 만들어지면 로드가 true가 될것임
