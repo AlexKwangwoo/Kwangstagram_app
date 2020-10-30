@@ -8,6 +8,7 @@ import constants from "../constants";
 import { gql } from "apollo-boost";
 import styles from "../styles";
 import { useMutation } from "@apollo/react-hooks";
+import { withNavigation } from "react-navigation";
 
 export const TOGGLE_LIKE = gql`
   mutation toggelLike($postId: String!) {
@@ -70,6 +71,7 @@ const Post = ({
   caption,
   comments = [],
   isLiked: isLikedProp,
+  navigation,
 }) => {
   //디폴트로 []빈 어레이
   const [isLiked, setIsLiked] = useState(isLikedProp);
@@ -93,13 +95,21 @@ const Post = ({
   return (
     <Container>
       <Header>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          } //여기 누를시 탭네비게이션의 유저디테일로 이동함!
+        >
           <Image
             style={{ height: 40, width: 40, borderRadius: 20 }}
             source={{ uri: user.avatar }}
           />
         </Touchable>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("UserDetail", { username: user.username })
+          } //여기서의 유저네임은 프로필클릭시 화면타이틀에 유저네임이 들어감 유저프로파일안의!!
+        >
           <HeaderUserContainer>
             <Bold>{user.username}</Bold>
             <Location>{location}</Location>
@@ -193,4 +203,4 @@ Post.propTypes = {
   createdAt: PropTypes.string.isRequired,
 };
 
-export default Post;
+export default withNavigation(Post);

@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createStackNavigator } from "react-navigation-stack";
 import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
+import Detail from "../screens/Detail";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import MessagesLink from "../components/MessagesLink";
@@ -11,6 +12,8 @@ import styled from "styled-components";
 import constants from "../constants";
 import NavIcon from "../components/NavIcon";
 import { stackStyles } from "./config";
+import styles from "../styles";
+import UserDetail from "../screens/UserDetail";
 
 const Image = styled.Image`
   width: ${constants.width / 4.5}px;
@@ -18,15 +21,37 @@ const Image = styled.Image`
 `;
 
 const stackFactory = (initialRoute, customConfig) =>
-  createStackNavigator({
-    InitialRoute: {
-      screen: initialRoute,
-      navigationOptions: {
-        ...customConfig,
-        headerStyle: { ...stackStyles },
+  createStackNavigator(
+    {
+      InitialRoute: {
+        screen: initialRoute,
+        navigationOptions: {
+          ...customConfig,
+        },
+      },
+      Detail: {
+        screen: Detail,
+        navigationOptions: {
+          headerTintColor: styles.blackColor, //tint는 모든 Detail안에 적용됨!
+          title: "Photo",
+        },
+      },
+      UserDetail: {
+        screen: UserDetail,
+        navigationOptions: ({ navigation }) => ({
+          title: navigation.getParam("username"),
+        }), //home화면에서 아바타누르면 유저 프로필로 이동하는 화면 만듬!
       },
     },
-  }); // home search add Notifications Profile 이친구들은
+    {
+      defaultNavigationOptions: {
+        headerBackTitle: null,
+        headerTintColor: styles.blackColor,
+        headerStyle: { ...stackStyles },
+        headerTitleAlign: "center",
+      },
+    }
+  ); // home search add Notifications Profile 이친구들은
 // tab안에있었고.. stack에 있지 않아 슬라이드가 되질않았다.
 // 함수를 통해 탭속에 스택을 넣어줄것이다!
 
@@ -55,7 +80,9 @@ export default createBottomTabNavigator(
       },
     },
     Search: {
-      screen: stackFactory(Search),
+      screen: stackFactory(Search, {
+        headerBackTitle: null, //서치했을때 나오는 맨위에 타이틀을 없앰!
+      }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
           <NavIcon
@@ -119,7 +146,7 @@ export default createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: "Profile", //탭네비게이션의 처음시작화면은 어디?
     tabBarOptions: {
       showLabel: false,
       Style: {

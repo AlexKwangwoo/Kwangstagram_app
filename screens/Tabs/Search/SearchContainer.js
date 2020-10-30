@@ -1,15 +1,8 @@
 import React from "react";
-import styled from "styled-components";
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../../components/SearchBar";
+import SearchPresenter from "./SearchPresenter";
 
-const View = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  background: white;
-`;
-
-const Text = styled.Text``;
+//서치전에 사진들 보여주고싶으면 쿼리 사용해서 하면됨!
 
 //클래스 컴포넌트는 훅 사용안됨
 export default class extends React.Component {
@@ -29,6 +22,7 @@ export default class extends React.Component {
     //screen이니까 props에 navigation이 전달됨
     this.state = {
       term: "",
+      shouldFetch: false,
     }; // 여기state를 navigation option에 값을 줄수있어야한다!
     navigation.setParams({
       //파라미터 설정 끝.. get통해 가져오면됨!
@@ -42,19 +36,16 @@ export default class extends React.Component {
   }
   onChange = (text) => {
     const { navigation } = this.props;
-    this.setState({ term: text });
+    this.setState({ term: text, shouldFetch: false });
     navigation.setParams({
       term: text,
     }); //state도 갱신하고, navigation의 prameter도 갱신하는것임!
   }; //term에 저장을 해둬야 나중에 검색 퀴리에 term을 사용 가능!!
   onSubmit = () => {
-    console.log("Submit");
+    this.setState({ shouldFetch: true });
   };
   render() {
-    return (
-      <View>
-        <Text>Search</Text>
-      </View>
-    );
+    const { term, shouldFetch } = this.state;
+    return <SearchPresenter term={term} shouldFetch={shouldFetch} />;
   }
 }
