@@ -146,11 +146,12 @@ export default createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "Profile", //탭네비게이션의 처음시작화면은 어디?
+    // initialRouteName: "Profile",
+    //탭네비게이션의 처음시작화면은 어디? 프로필로하세요임!
     tabBarOptions: {
       showLabel: false,
       Style: {
-        backgroundColor: "#FAFAFA",
+        backgroundColor: "Black",
       },
     },
   }

@@ -1,6 +1,12 @@
 import React from "react";
 import SearchBar from "../../../components/SearchBar";
 import SearchPresenter from "./SearchPresenter";
+import styled from "styled-components";
+
+const View = styled.View`
+  background-color: white;
+  height: 100%;
+`;
 
 //서치전에 사진들 보여주고싶으면 쿼리 사용해서 하면됨!
 
@@ -46,6 +52,10 @@ export default class extends React.Component {
   };
   render() {
     const { term, shouldFetch } = this.state;
-    return <SearchPresenter term={term} shouldFetch={shouldFetch} />;
+    return (
+      <View>
+        <SearchPresenter term={term} shouldFetch={shouldFetch} />
+      </View>
+    );
   }
 }

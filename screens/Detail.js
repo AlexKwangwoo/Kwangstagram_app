@@ -16,20 +16,24 @@ const POST_DETAIL = gql`
   ${POST_FRAGMENT}
 `;
 // fragment사용! 안에 postparts있음!
-const View = styled.View``;
+const View = styled.View`
+  background-color: white;
+  height: 100%;
+`;
 const Text = styled.Text``;
-
 export default ({ navigation }) => {
   const { loading, data } = useQuery(POST_DETAIL, {
     variables: { id: navigation.getParam("id") },
   });
   return (
-    <ScrollView styled={{ flex: 1 }}>
-      {loading ? (
-        <Loader />
-      ) : (
-        data && data.seeFullPost && <Post {...data.seeFullPost} />
-      )}
-    </ScrollView>
+    <View>
+      <ScrollView styled={{ flex: 1 }}>
+        {loading ? (
+          <Loader />
+        ) : (
+          data && data.seeFullPost && <Post {...data.seeFullPost} />
+        )}
+      </ScrollView>
+    </View>
   );
 };
