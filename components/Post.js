@@ -17,7 +17,7 @@ export const TOGGLE_LIKE = gql`
 `;
 
 const Container = styled.View`
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 `;
 
 const Header = styled.View`
