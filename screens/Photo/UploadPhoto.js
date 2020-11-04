@@ -7,7 +7,7 @@ import useInput from "../../hooks/useInput";
 import styles from "../../styles";
 import constants from "../../constants";
 import { useMutation } from "@apollo/react-hooks";
-import { FEED_QUERY } from "../Tabs/Home";
+import { FEED_QUERY } from "../Tabs/HomeBottom";
 
 const UPLOAD = gql`
   mutation upload($caption: String!, $files: [String!]!, $location: String) {
@@ -85,7 +85,6 @@ export default ({ navigation }) => {
           "content-type": "multipart/form-data",
         },
       });
-      console.log(location);
       // setFileUrl(location); //데이터를 패쓰한다!
       const {
         data: { upload },
