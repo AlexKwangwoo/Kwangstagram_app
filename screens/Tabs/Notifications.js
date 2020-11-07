@@ -47,7 +47,9 @@ const Div = styled.View`
   margin-left:15px;
   margin-top:15px;
 `;
-const ControllBox = styled.View``;
+const ControllBox = styled.View`
+  background-color: white;
+`;
 
 const Username = styled.Text`
   font-weight: 500;
@@ -68,8 +70,9 @@ const BigBox = styled.View`
 const StartText = styled.Text`
   font-size: 16px;
   font-weight: 500;
-  margin-left: 10px;
+  padding-left: 10px;
   margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const DownBox = styled.View``;

@@ -6,6 +6,7 @@ import { gql } from "apollo-boost";
 import Loader from "../../components/Loader";
 import { Image } from "react-native";
 import { trimText } from "../../utils";
+import { withNavigation } from "react-navigation";
 
 const GET_ME = gql`
   query me {
@@ -40,7 +41,7 @@ const View = styled.View`
   margin-left:-2px
   height: 26%;
   background-color: white;
-  border: 0.5px solid gray;
+  border: 1px solid #dbdbdb;
 `;
 const ViewIOS = styled.View`
   margin-top: -40px;
@@ -48,7 +49,7 @@ const ViewIOS = styled.View`
   margin-left:-2px
   height: 22%;
   background-color: white;
-  border: 0.5px solid gray;
+  border: 1px solid #dbdbdb;
 `;
 
 const Text = styled.Text`
@@ -58,7 +59,11 @@ const Text = styled.Text`
   margin-bottom: 20px;
 `;
 
-export default () => {
+const Touchable = styled.TouchableOpacity`
+  align-items: center;
+`;
+
+const Hometop = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { loading, data, refetch } = useQuery(GET_ME);
   return Platform.OS === "ios" ? (
@@ -80,17 +85,25 @@ export default () => {
           data.me &&
           data.me.following.map((following) => (
             <SlideBox key={following.id}>
-              <Image
-                style={{
-                  height: 70,
-                  width: 70,
-                  borderRadius: 60,
-                  borderWidth: 2,
-                  borderColor: "#c72e90",
-                }}
-                source={{ uri: following.avatar }}
-              />
-              <Text>{trimText(following.username, 10)}</Text>
+              <Touchable
+                onPress={() =>
+                  navigation.navigate("UserDetail", {
+                    username: following.username,
+                  })
+                } //여기서의 유저네임은 프로필클릭시 화면타이틀에 유저네임이 들어감 유저프로파일안의!!
+              >
+                <Image
+                  style={{
+                    height: 70,
+                    width: 70,
+                    borderRadius: 60,
+                    borderWidth: 2,
+                    borderColor: "#c72e90",
+                  }}
+                  source={{ uri: following.avatar }}
+                />
+                <Text>{trimText(following.username, 10)}</Text>
+              </Touchable>
             </SlideBox>
           ))
         )}
@@ -133,3 +146,5 @@ export default () => {
     </View>
   );
 };
+
+export default withNavigation(Hometop);

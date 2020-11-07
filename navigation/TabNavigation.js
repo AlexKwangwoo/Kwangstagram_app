@@ -14,6 +14,8 @@ import NavIcon from "../components/NavIcon";
 import { stackStyles } from "./config";
 import styles from "../styles";
 import UserDetail from "../screens/UserDetail";
+import CommentDetail from "../screens/CommentDetail";
+import PhotoLink from "../components/PhotoLink";
 
 const Image = styled.Image`
   width: ${constants.width / 4.5}px;
@@ -42,6 +44,12 @@ const stackFactory = (initialRoute, customConfig) =>
           title: navigation.getParam("username"),
         }), //home화면에서 아바타누르면 유저 프로필로 이동하는 화면 만듬!
       },
+      CommentDetail: {
+        screen: CommentDetail,
+        navigationOptions: ({ navigation }) => ({
+          title: "Comments",
+        }), //home화면에서 아바타누르면 유저 프로필로 이동하는 화면 만듬!
+      },
     },
     {
       defaultNavigationOptions: {
@@ -61,6 +69,7 @@ export default createBottomTabNavigator(
       screen: stackFactory(Home, {
         //여기는 스택네비게이션의 환경설정이다. top
         headerRight: () => <MessagesLink />,
+        headerLeft: () => <PhotoLink />,
         headerTitle: () => (
           <Image
             resizeMode="contain"

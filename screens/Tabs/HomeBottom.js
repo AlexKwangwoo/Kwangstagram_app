@@ -29,6 +29,7 @@ export const FEED_QUERY = gql`
 const View = styled.View`
   background-color: white;
   height: 100%;
+  padding-bottom: 110px;
 `;
 
 export default () => {

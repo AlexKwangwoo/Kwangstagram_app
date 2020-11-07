@@ -69,6 +69,7 @@ const Post = ({
   files = [],
   likeCount: likeCountProp,
   caption,
+  createdAt,
   comments = [],
   isLiked: isLikedProp,
   navigation,
@@ -165,7 +166,16 @@ const Post = ({
         <Caption>
           <Bold>{user.username}</Bold> {caption}
         </Caption>
-        <Touchable>
+        <Touchable
+          onPress={() =>
+            navigation.navigate("CommentDetail", {
+              comments: comments,
+              caption: caption,
+              user: user,
+              createdAt: createdAt,
+            })
+          }
+        >
           <CommentCount>See all {comments.length} comments</CommentCount>
         </Touchable>
       </InfoContainer>
